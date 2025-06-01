@@ -1,10 +1,13 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Top from "./pages/Top";
 
 function App() {
   return (
-    <div className="text-2xl text-blue-600 font-bold">
-      Hello Tailwind + Vite + React!
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Top />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
