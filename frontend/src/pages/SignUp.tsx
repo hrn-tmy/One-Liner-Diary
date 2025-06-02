@@ -18,15 +18,9 @@ export default function SignUp() {
   const confirmPassword = watch("confirmPassword");
   const onSubmit = async (data: signupData) => {
     try {
-      await axios.post(
-        "http://localhost:8080/signup",
-        {
-          name: data.name,
-          email: data.email,
-          password: data.password,
-        },
-        { withCredentials: true }
-      );
+      await axios.post("http://localhost:8080/signup", data, {
+        withCredentials: true,
+      });
       navigate("/diary");
     } catch (error) {
       console.error("サインアップ失敗", error);
@@ -115,6 +109,13 @@ export default function SignUp() {
           className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md"
         >
           サインアップ
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="w-full text-sm text-gray-500 hover:text-gray-700 underline mt-2"
+        >
+          ← 戻る
         </button>
       </form>
     </div>
