@@ -81,9 +81,7 @@ export default function SignUp() {
             placeholder="8〜20文字のパスワード"
           />
           <p className="text-sm text-gray-500 mt-1">
-            英大文字・小文字・数字・記号（!@#$%^&*）のうち
-            <br />
-            2種類以上を含めてください
+            英大文字・小文字・数字・記号（!@#$%^&*）のうち2種類以上を含めてください。
           </p>
           {errors.password && (
             <p className="text-sm text-red-500">{errors.password.message}</p>
