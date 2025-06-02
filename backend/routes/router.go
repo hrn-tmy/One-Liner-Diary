@@ -1,0 +1,30 @@
+package routes
+
+import (
+	"log"
+	"net/http"
+	"one-liner-diary/api"
+	"one-liner-diary/db"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
+
+func SetUpRouter() *echo.Echo {
+	db, err := db.SetUpDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	handler := api.Handler{
+		DB: db,
+	}
+	e := echo.New()
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowCredentials: true,
+	}))
+	e.POST("signup", handler.Signup)
+
+	return e
+}
