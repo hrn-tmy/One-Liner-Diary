@@ -1,10 +1,19 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Top from "./pages/Top";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import List from "./pages/diary/List";
 
 function App() {
   return (
-    <div className="text-2xl text-blue-600 font-bold">
-      Hello Tailwind + Vite + React!
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Top />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/list" element={<List />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
