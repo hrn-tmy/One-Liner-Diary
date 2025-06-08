@@ -24,7 +24,8 @@ func SetUpRouter() *echo.Echo {
 		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 		AllowCredentials: true,
 	}))
-	e.POST("signup", handler.Signup)
+	e.POST("/signup", handler.Signup)
+	e.POST("/login", handler.Login)
 
 	return e
 }
