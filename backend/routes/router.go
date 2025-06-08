@@ -34,6 +34,7 @@ func SetUpRouter() *echo.Echo {
 	}
 	d.GET("/list", diaryHandler.List)
 	d.POST("/create", diaryHandler.Create)
+	d.PUT("/update/:diary_id", diaryHandler.Update)
 
 	return e
 }
