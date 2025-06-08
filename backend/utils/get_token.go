@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func GetToken(ctx echo.Context) (int,error) {
+func GetToken(ctx echo.Context) (int, error) {
 	authHeader := ctx.Request().Header.Get("Authorization")
 	if authHeader == "" {
 		return 0, fmt.Errorf("トークンが存在しません。")
