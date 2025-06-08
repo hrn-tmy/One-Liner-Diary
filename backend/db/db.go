@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"one-liner-diary/model"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -16,6 +17,9 @@ func SetUpDB() (*gorm.DB, error) {
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_HOST"), os.Getenv("POSTGRES_PORT"), os.Getenv("POSTGRES_DB"))
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
+		return nil, err
+	}
+	if err := db.AutoMigrate(&model.User{}); err != nil {
 		return nil, err
 	}
 	return db, nil
