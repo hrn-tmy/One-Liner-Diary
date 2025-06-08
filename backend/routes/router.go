@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"one-liner-diary/api"
+	"one-liner-diary/api/diary"
 	"one-liner-diary/db"
 
 	"github.com/labstack/echo/v4"
@@ -26,6 +27,12 @@ func SetUpRouter() *echo.Echo {
 	}))
 	e.POST("/signup", handler.Signup)
 	e.POST("/login", handler.Login)
+
+	d := e.Group("/diary")
+	diaryHandler := diary.DiaryHandler{
+		DB: db,
+	}
+	d.GET("/list", diaryHandler.List)
 
 	return e
 }
