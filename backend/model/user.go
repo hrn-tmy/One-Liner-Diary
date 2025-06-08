@@ -13,7 +13,7 @@ type User struct {
 	Password  string         `json:"password" gorm:"not null"`
 	IsValid   bool           `json:"is_valid" gorm:"not null"`
 	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time   `json:"updated_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`
 }
 

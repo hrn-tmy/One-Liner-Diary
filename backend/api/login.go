@@ -16,7 +16,7 @@ import (
 
 var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
-func (h Handler)Login(ctx echo.Context) error {
+func (h Handler) Login(ctx echo.Context) error {
 	req := model.ReqLoginUser{}
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusBadRequest, model.ErrorResponse{Result: false, Message: err.Error()})
