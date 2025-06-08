@@ -33,6 +33,7 @@ func SetUpRouter() *echo.Echo {
 		DB: db,
 	}
 	d.GET("/list", diaryHandler.List)
+	d.POST("/create", diaryHandler.Create)
 
 	return e
 }

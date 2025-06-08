@@ -7,7 +7,7 @@ import (
 )
 
 type Diary struct {
-	DiaryID    int            `json:"diary_id"`
+	DiaryID    int            `json:"diary_id" gorm:"primaryKey"`
 	UserID     int            `json:"user_id"`
 	Did        string         `json:"did"`
 	Meaning    string         `json:"meaning"`
@@ -16,4 +16,5 @@ type Diary struct {
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `json:"deleted_at"`
+	User User
 }
