@@ -22,7 +22,9 @@ export default function Create() {
       await axios.post("http://localhost:8080/diary/create", data, {
         withCredentials: true,
       });
-      navigate("/list");
+      navigate("/list", {
+        state: { message: "日記を作成しました！" },
+      });
     } catch (error) {
       console.error("日記作成失敗:", error);
       alert("日記の作成に失敗しました。");

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import type { ListType } from "../../schema/diarySchema";
 import DiaryModal from "../../modal/DiaryModal";
 
@@ -8,6 +9,17 @@ export default function List() {
   const [lists, setLists] = useState<ListType[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const message = location.state?.message;
+
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [message, location.pathname, navigate]);
 
   useEffect(() => {
     const fetchList = async () => {
