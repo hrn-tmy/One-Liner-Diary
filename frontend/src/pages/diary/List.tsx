@@ -32,13 +32,14 @@ export default function List() {
   const deleteDiary = async (diary_id: number) => {
     try {
       await axios.delete(`http://localhost:8080/diary/delete/${diary_id}`);
+      toast.success("日記を削除しました");
       alert("削除に成功しました。");
       setLists((prevDiaries) =>
         prevDiaries.filter((diary) => diary.diary_id !== diary_id)
       );
     } catch (error) {
       console.error("日記削除エラー", error);
-      alert("日記の削除に失敗しました。");
+      toast.error("日記を削除しました");
     }
   };
 
