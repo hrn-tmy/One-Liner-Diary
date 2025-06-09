@@ -2,6 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import {
   diaryCreateSchema,
   type CreateDiaryType,
@@ -27,7 +28,7 @@ export default function Create() {
       });
     } catch (error) {
       console.error("日記作成失敗:", error);
-      alert("日記の作成に失敗しました。");
+      toast.error("日記の作成に失敗しました");
     }
   };
 
