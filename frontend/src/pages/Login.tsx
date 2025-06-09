@@ -1,11 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginSchema, type loginData } from "../schema/userSchema";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { useEffect } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message;
   const {
     register,
     handleSubmit,
@@ -14,15 +18,22 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [message, location.pathname, navigate]);
+
   const onSubmit = async (data: loginData) => {
     try {
       await axios.post("http://localhost:8080/login", data, {
         withCredentials: true,
       });
-      navigate("/diary");
+      navigate("/diary", { state: { message: "ログインに成功しました！" } });
     } catch (error) {
       console.error("ログイン失敗", error);
-      alert("ログインに失敗しました。");
+      toast.error("ログインに失敗しました。");
     }
   };
 
@@ -72,7 +83,7 @@ export default function Login() {
         </button>
         <button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="w-full text-sm text-gray-500 hover:text-gray-700 underline mt-2"
         >
           ← 戻る

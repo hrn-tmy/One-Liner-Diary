@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { userSchema, type signupData } from "../schema/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,10 +22,14 @@ export default function SignUp() {
       await axios.post("http://localhost:8080/signup", data, {
         withCredentials: true,
       });
-      navigate("/diary");
+      navigate("/login", {
+        state: {
+          message: "サインアップに成功しました！ログインしてください。",
+        },
+      });
     } catch (error) {
       console.error("サインアップ失敗", error);
-      alert("サインアップに失敗しました。");
+      toast.error("サインアップに失敗しました。");
     }
   };
 
@@ -112,7 +117,7 @@ export default function SignUp() {
         </button>
         <button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="w-full text-sm text-gray-500 hover:text-gray-700 underline mt-2"
         >
           ← 戻る
