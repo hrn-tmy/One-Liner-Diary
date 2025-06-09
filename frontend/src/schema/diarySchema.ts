@@ -3,18 +3,17 @@ import { z } from "zod";
 export const diariesSchema = z.object({
   diary_id: z.number(),
   created_at: z.string(),
+  title: z.string(),
   did: z.string(),
 });
 
-export const diaryDetail = z.object({
+export const diaryDetailSchema = z.object({
   diary_id: z.number(),
+  title: z.string().min(1, "タイトルは必須です。"),
   did: z.string().min(1, "やったことは必須です。"),
-  meaning: z.string().min(1, "自分にとっての意味は必須です。"),
-  awareness: z.string().min(1, "気づきは必須です。"),
-  next_action: z.string().min(1, "ネクストアクションは必須です。"),
 });
 
-export const diaryModalProps = z.object({
+export const diaryModalPropsSchema = z.object({
   diary_id: z.number(),
   onClose: z.function().args().returns(z.void()),
 });
@@ -24,10 +23,17 @@ export const diaryCreateSchema = z.object({
   did: z.string().min(1, "やったことは必須です。"),
 });
 
+export const diaryUpdateSchema = z.object({
+  title: z.string().min(1, "タイトルは必須です。"),
+  did: z.string().min(1, "やったことは必須です。"),
+});
+
 export type ListType = z.infer<typeof diariesSchema>;
 
-export type ListDetailType = z.infer<typeof diaryDetail>;
+export type DiaryDetailType = z.infer<typeof diaryDetailSchema>;
 
-export type ListDetailProps = z.infer<typeof diaryModalProps>;
+export type DiaryDetailProps = z.infer<typeof diaryModalPropsSchema>;
 
 export type CreateDiaryType = z.infer<typeof diaryCreateSchema>;
+
+export type UpdateDiaryType = z.infer<typeof diaryUpdateSchema>;
