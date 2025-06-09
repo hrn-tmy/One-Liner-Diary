@@ -19,8 +19,15 @@ export const diaryModalProps = z.object({
   onClose: z.function().args().returns(z.void()),
 });
 
+export const diaryCreateSchema = z.object({
+  title: z.string().min(1, "タイトルは必須です。"),
+  did: z.string().min(1, "やったことは必須です。"),
+});
+
 export type ListType = z.infer<typeof diariesSchema>;
 
 export type ListDetailType = z.infer<typeof diaryDetail>;
 
 export type ListDetailProps = z.infer<typeof diaryModalProps>;
+
+export type CreateDiaryType = z.infer<typeof diaryCreateSchema>;
