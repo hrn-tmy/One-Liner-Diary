@@ -4,18 +4,23 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/labstack/echo/v4"
 )
 
 func GetToken(ctx echo.Context) (int, error) {
-	authHeader := ctx.Request().Header.Get("Authorization")
-	if authHeader == "" {
+	cookie, err := ctx.Cookie(os.Getenv("COOKIE_NAME"))
+	if err != nil {
+		return 0, fmt.Errorf("Cookieが存在しません。")
+	}
+	v := cookie.Value
+	if v == "" {
 		return 0, fmt.Errorf("トークンが存在しません。")
 	}
-	splitHeader := strings.Split(authHeader, ".")
-	payload, err := base64.RawURLEncoding.DecodeString(splitHeader[1])
+	splitToken := strings.Split(v, ".")
+	payload, err := base64.RawURLEncoding.DecodeString(splitToken[1])
 	if err != nil {
 		return 0, fmt.Errorf("ペイロードのデコードに失敗しました。")
 	}
