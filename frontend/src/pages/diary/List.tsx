@@ -9,10 +9,18 @@ export default function List() {
   const [lists, setLists] = useState<ListType[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [flashMessage, setFlashMessage] = useState<string | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
   const message = location.state?.message;
+
+  useEffect(() => {
+    if (flashMessage) {
+      toast.success(flashMessage);
+      setFlashMessage(null);
+    }
+  }, [flashMessage]);
 
   useEffect(() => {
     if (message) {
@@ -67,7 +75,7 @@ export default function List() {
           <thead className="bg-gray-200">
             <tr>
               <th className="p-2 border">日付</th>
-              <th className="p-2 border">やったこと</th>
+              <th className="p-2 border">タイトル</th>
               <th className="p-2 border"></th>
             </tr>
           </thead>
@@ -82,7 +90,7 @@ export default function List() {
                   }}
                   className="p-2 border text-blue-600 cursor-pointer hover:underline"
                 >
-                  {list.did}
+                  {list.title}
                 </td>
                 <td className="p-2 border">
                   <button
@@ -106,7 +114,10 @@ export default function List() {
         {showModal && selectedId !== null && (
           <DiaryModal
             diary_id={selectedId}
-            onClose={() => setShowModal(false)}
+            onClose={(message?: string) => {
+              setShowModal(false);
+              if (message) setFlashMessage(message);
+            }}
           />
         )}
       </div>
