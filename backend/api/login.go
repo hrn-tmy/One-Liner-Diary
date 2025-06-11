@@ -47,7 +47,7 @@ func (h Handler) Login(ctx echo.Context) error {
 func generateToken(user model.User) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id": user.UserID,
-		"exp":     time.Now().Add(24 * time.Hour).Unix(),
+		"exp":     time.Now().Add(1 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(jwtSecret)
@@ -59,7 +59,7 @@ func SetCookie(ctx echo.Context, token string) error {
 	cookie.Value = token
 	cookie.Path = "/"
 	cookie.HttpOnly = true
-	cookie.Expires = time.Now().Add(24 * time.Hour)
+	cookie.Expires = time.Now().Add(1 * time.Hour)
 	ctx.SetCookie(cookie)
 	return nil
 }

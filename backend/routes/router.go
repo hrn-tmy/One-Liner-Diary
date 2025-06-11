@@ -27,6 +27,7 @@ func SetUpRouter() *echo.Echo {
 	}))
 	e.POST("/signup", handler.Signup)
 	e.POST("/login", handler.Login)
+	e.POST("/logout", handler.Logout)
 
 	d := e.Group("/diary")
 	diaryHandler := diary.DiaryHandler{
