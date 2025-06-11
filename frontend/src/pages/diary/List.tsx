@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { ListType } from "../../schema/diarySchema";
 import DiaryModal from "../../modal/DiaryModal";
+import Layout from "../../layout/Layout";
 
 export default function List() {
   const [lists, setLists] = useState<ListType[]>([]);
@@ -61,66 +62,68 @@ export default function List() {
   }
 
   return (
-    <div>
-      <div className="p-8">
-        <h2 className="text-2xl font-bold mb-4">日記一覧</h2>
-        <div className="flex justify-end mb-4">
-          <Link to="/diary/create">
-            <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-              新規作成
-            </button>
-          </Link>
-        </div>
-        <table className="w-full table-auto border">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="p-2 border">日付</th>
-              <th className="p-2 border">タイトル</th>
-              <th className="p-2 border"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {lists.map((list) => (
-              <tr key={list.diary_id} className="text-center">
-                <td className="p-2 border">{formatDate(list.created_at)}</td>
-                <td
-                  onClick={() => {
-                    setSelectedId(list.diary_id);
-                    setShowModal(true);
-                  }}
-                  className="p-2 border text-blue-600 cursor-pointer hover:underline"
-                >
-                  {list.title}
-                </td>
-                <td className="p-2 border">
-                  <button
+    <Layout>
+      <div>
+        <div className="p-8">
+          <h2 className="text-2xl font-bold mb-4">日記一覧</h2>
+          <div className="flex justify-end mb-4">
+            <Link to="/diary/create">
+              <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                新規作成
+              </button>
+            </Link>
+          </div>
+          <table className="w-full table-auto border">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="p-2 border">日付</th>
+                <th className="p-2 border">タイトル</th>
+                <th className="p-2 border"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {lists.map((list) => (
+                <tr key={list.diary_id} className="text-center">
+                  <td className="p-2 border">{formatDate(list.created_at)}</td>
+                  <td
                     onClick={() => {
                       setSelectedId(list.diary_id);
-                      if (
-                        window.confirm("本当に削除してもよろしいでしょうか？")
-                      ) {
-                        deleteDiary(list.diary_id);
-                      }
+                      setShowModal(true);
                     }}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    className="p-2 border text-blue-600 cursor-pointer hover:underline"
                   >
-                    削除
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {showModal && selectedId !== null && (
-          <DiaryModal
-            diary_id={selectedId}
-            onClose={(message?: string) => {
-              setShowModal(false);
-              if (message) setFlashMessage(message);
-            }}
-          />
-        )}
+                    {list.title}
+                  </td>
+                  <td className="p-2 border">
+                    <button
+                      onClick={() => {
+                        setSelectedId(list.diary_id);
+                        if (
+                          window.confirm("本当に削除してもよろしいでしょうか？")
+                        ) {
+                          deleteDiary(list.diary_id);
+                        }
+                      }}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    >
+                      削除
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {showModal && selectedId !== null && (
+            <DiaryModal
+              diary_id={selectedId}
+              onClose={(message?: string) => {
+                setShowModal(false);
+                if (message) setFlashMessage(message);
+              }}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
