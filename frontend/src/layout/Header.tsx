@@ -6,7 +6,9 @@ export default function Header() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:8080/logout");
+      await axios.post("http://localhost:8080/logout", null, {
+        withCredentials: true,
+      });
       navigate("/");
     } catch (error) {
       console.error("ログアウト失敗", error);
